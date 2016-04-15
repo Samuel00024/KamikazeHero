@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour {
 
@@ -27,10 +29,12 @@ public class PlayerController : MonoBehaviour {
             animacion.SetBool("Jump", jump);
             moveDirection = new Vector3(0, 0, speed);
 			moveDirection = transform.TransformDirection(moveDirection);
-			if (Input.GetButton("Fire1")) {
-				moveDirection.y = jumpSpeed;
-				jump = true;
-				animacion.SetBool ("Jump", jump);
+			if (Input.touchCount == 1) {
+				if (Input.GetTouch (0).phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject ()) {
+					moveDirection.y = jumpSpeed;
+					jump = true;
+					animacion.SetBool ("Jump", jump);
+				}
 			}
         }
 
@@ -61,7 +65,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void Ability1 (string text) {
-		Debug.Log (text);
+		SceneManager.LoadScene ("main");
 	}
 
 }
