@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class empezarNivel : MonoBehaviour {
 
@@ -14,6 +15,6 @@ public class empezarNivel : MonoBehaviour {
 	}
     public void loadlevel()
     {
-        Application.LoadLevel("nivelPrueba");
+		SceneManager.LoadScene ("nivelPrueba");
     }
 }

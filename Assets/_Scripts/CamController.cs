@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class CamController : MonoBehaviour {
 
@@ -24,6 +25,6 @@ public class CamController : MonoBehaviour {
     }
     public void startLevel()
     {
-        Application.LoadLevel("nivelPrueba");
+		SceneManager.LoadScene ("nivelPrueba");
     }
 }
