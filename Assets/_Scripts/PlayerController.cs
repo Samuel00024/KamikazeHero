@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour {
 
-	[HideInInspector] public bool jump = false, attack = false;
+	[HideInInspector] public bool jump = false, attack = false;	//Jump determina si estás saltando
 
-	public float speed;
+	[Range(0f, 30f)]public float speed;
 	public float jumpSpeed = 8.0F;
 	public float gravity = 20.0F;
     public Animator animacion;
@@ -29,12 +29,11 @@ public class PlayerController : MonoBehaviour {
             animacion.SetBool("Jump", jump);
             moveDirection = new Vector3(0, 0, speed);
 			moveDirection = transform.TransformDirection(moveDirection);
-			if (Input.touchCount == 1) {
-				if (Input.GetTouch (0).phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject ()) {
-					moveDirection.y = jumpSpeed;
-					jump = true;
-					animacion.SetBool ("Jump", jump);
-				}
+			if ((Input.touchCount > 0 || Input.GetMouseButtonDown(0))
+				&& EventSystem.current.IsPointerOverGameObject() == false) {
+				moveDirection.y = jumpSpeed;
+				jump = true;
+				animacion.SetBool ("Jump", jump);
 			}
         }
 
