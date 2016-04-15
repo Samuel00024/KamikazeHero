@@ -1,70 +1,151 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using System.Diagnostics;
+using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
+    #region Inspector fields
 
-	[HideInInspector] public bool jump = false, attack = false;	//Jump determina si estás saltando
+    [Header("Parameters")]
+    [Range(0f, 25f)]
+    public float MovementSpeed;
 
-	[Range(0f, 30f)]public float speed;
-	public float jumpSpeed = 8.0F;
-	public float gravity = 20.0F;
-    public Animator animacion;
-	public GameObject arma;
+    [Range(0f, 1f)]
+    public float GravityInfluence;
 
-	private BoxCollider areaImpacto;
-	private Vector3 moveDirection = Vector3.zero;
+    [Range(0f, 100f)]
+    public float JumpSpeed;
 
-    void Start()
+    [Range(0f, 5f)]
+    public float AttackCooldown;
+
+    [Header("References")]
+    public GameObject Weapon;
+    public BoxCollider WeaponCollider;
+    public Animator Animator;
+    public CharacterController Character;
+
+    #endregion
+
+    #region Properties
+
+    public bool IsJumping { get; private set; }
+    public bool IsAttacking { get; private set; }
+
+    #endregion
+
+    #region Local variables
+
+    protected Vector3 m_MovementDirection;
+
+    #endregion
+
+    #region Public Methods
+
+    public void PerformAttack()
     {
-        animacion = GetComponent<Animator>();
-		areaImpacto = arma.gameObject.GetComponent<BoxCollider>(); // Obtener el control de la "hitbox" del arma
+        if (IsAttacking == false)
+        {
+            StartCoroutine(AttackRoutine(AttackCooldown, finishedCallback: () =>
+                    {
+                        IsAttacking = false;
+                    })
+            );
+        }
     }
 
-    void Update() {
-		CharacterController controller = GetComponent<CharacterController>();
-		if (controller.isGrounded) {
-            jump = false;
-            animacion.SetBool("Jump", jump);
-            moveDirection = new Vector3(0, 0, speed);
-			moveDirection = transform.TransformDirection(moveDirection);
-			if ((Input.touchCount > 0 || Input.GetMouseButtonDown(0))
-				&& EventSystem.current.IsPointerOverGameObject() == false) {
-				moveDirection.y = jumpSpeed;
-				jump = true;
-				animacion.SetBool ("Jump", jump);
-			}
+    public void PerformAbility(string text)
+    {
+        SceneManager.LoadScene("main");
+    }
+
+    #endregion
+
+    #region Unity Methods
+
+    void Update()
+    {
+        if (Character.isGrounded)
+        {
+            IsJumping = false;
+
+            Animator.SetBool("Jump", false);
+
+            m_MovementDirection = new Vector3(0, 0, MovementSpeed);
+            m_MovementDirection = transform.TransformDirection(m_MovementDirection);
         }
 
-		//Necesitamos manejar el fin de la animación de ataque desde Update()
-		//De otro modo, sólo terminaría la animación volviendo a pulsar ataque (¡¡OH, NO!!)
-		if (animacion.GetCurrentAnimatorStateInfo(0).IsName("Attack")&&attack){
-			attack = false;
-			areaImpacto.isTrigger = false;
-			Debug.Log("tada2!");
-		}
-       
-        animacion.SetBool("Attack", attack);
-        animacion.SetFloat("Speed", speed);
-        moveDirection.y -= gravity * Time.deltaTime;
-		controller.Move(moveDirection * Time.deltaTime);
-	}
+        ProcessInputDesktop();
+        ProcessInputMobile();
 
+        UpdateAnimationStatus();
+        UpdateMovement();
+    }
 
-	//El ataque puede ser llamado en cualquier momento (cooldown no contemplado)
-	public void Ataque () {
-		if (!attack)
-		{
-			attack = true;
-			areaImpacto.isTrigger = true;
-			Debug.Log("Ataque!");
-		}
+    #endregion
 
-	}
+    #region Local methods
 
-	public void Ability1 (string text) {
-		SceneManager.LoadScene ("main");
-	}
+    protected void UpdateAnimationStatus()
+    {
+        if (Animator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && IsAttacking)
+        {
+            IsAttacking = false;
+            WeaponCollider.isTrigger = false;
+        }
 
+        Animator.SetBool("Attack", IsAttacking);
+        Animator.SetFloat("Speed", MovementSpeed);
+    }
+
+    protected void UpdateMovement()
+    {
+        m_MovementDirection.y -= GravityInfluence;
+        Character.Move(m_MovementDirection * Time.deltaTime);
+    }
+
+    [Conditional("UNITY_ANDROID"), Conditional("UNITY_IOS")]
+    protected void ProcessInputMobile()
+    {
+        if (IsJumping == false && Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject() == false)
+        {
+            m_MovementDirection.y = JumpSpeed;
+            IsJumping = true;
+
+            Animator.SetBool("Jump", true);
+        }
+    }
+
+    [Conditional("UNITY_STANDALONE")]
+    protected void ProcessInputDesktop()
+    {
+        if (IsJumping == false && Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
+        {
+            m_MovementDirection.y = JumpSpeed;
+            IsJumping = true;
+
+            Animator.SetBool("Jump", true);
+        }
+    }
+
+    #endregion
+
+    #region Coroutines
+
+    public IEnumerator AttackRoutine(float cooldown, System.Action finishedCallback = null)
+    {
+        IsAttacking = true;
+        WeaponCollider.isTrigger = true;
+
+        yield return new WaitForSeconds(cooldown);
+
+        if (finishedCallback != null)
+        {
+            finishedCallback();
+        }
+    }
+
+    #endregion
 }
