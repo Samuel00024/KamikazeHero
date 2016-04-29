@@ -11,11 +11,11 @@ public class AtaqueArma : MonoBehaviour {
         {
             Destroy(col.gameObject);
 			Instantiate(chispas, transform.position, transform.rotation);
-            Debug.Log("bum!");
+            //Debug.Log("bum!");
         }
         else
         {
-            Debug.Log("no tada");
+            //Debug.Log("no tada");
         }
 
 

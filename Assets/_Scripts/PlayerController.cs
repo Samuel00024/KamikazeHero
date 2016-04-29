@@ -20,12 +20,15 @@ public class PlayerController : MonoBehaviour
 
     [Range(0f, 5f)]
     public float AttackCooldown;
+    public float AttackCooldown2;
+    public float AttackCooldown3;
 
     [Header("References")]
     public GameObject Weapon;
     public BoxCollider WeaponCollider;
     public Animator Animator;
     public CharacterController Character;
+    public kami02 skill02;
 
     #endregion
 
@@ -33,28 +36,45 @@ public class PlayerController : MonoBehaviour
 
     public bool IsJumping { get; private set; }
     public bool IsAttacking { get; private set; }
+    //public bool IsSkill02 { get; private set; }
 
     #endregion
 
     #region Local variables
 
     protected Vector3 m_MovementDirection;
+    protected bool IsSkill02;
 
     #endregion
 
     #region Public Methods
 
-    public void PerformAttack()
+    public void PerformSkill01()
     {
         if (IsAttacking == false)
         {
-            StartCoroutine(AttackRoutine(AttackCooldown, finishedCallback: () =>
+            StartCoroutine(skill01Routine(AttackCooldown, finishedCallback: () =>
                     {
                         IsAttacking = false;
+                        WeaponCollider.isTrigger = false;
                     })
             );
         }
     }
+
+    public void PerformSkill02()
+    {
+        if (IsSkill02 == false)
+        {
+            skill02.lv1Ini(ref IsSkill02, ref WeaponCollider, ref MovementSpeed);
+            StartCoroutine(skill02.skillRoutine(AttackCooldown, finishedCallback: () =>
+            {
+                skill02.lv1Fin(ref IsSkill02, ref WeaponCollider, ref MovementSpeed);
+            })
+            );
+        }
+    }
+
 
     public void PerformAbility(string text)
     {
@@ -96,8 +116,15 @@ public class PlayerController : MonoBehaviour
             WeaponCollider.isTrigger = false;
         }
 
+        if (Animator.GetCurrentAnimatorStateInfo(0).IsName("Attack02")  && IsSkill02)
+        {
+            IsSkill02 = false;
+            WeaponCollider.isTrigger = false;
+        }
+        Animator.SetBool("Attack02", IsSkill02);
         Animator.SetBool("Attack", IsAttacking);
         Animator.SetFloat("Speed", MovementSpeed);
+
     }
 
     protected void UpdateMovement()
@@ -134,7 +161,7 @@ public class PlayerController : MonoBehaviour
 
     #region Coroutines
 
-    public IEnumerator AttackRoutine(float cooldown, System.Action finishedCallback = null)
+    public IEnumerator skill01Routine(float cooldown, System.Action finishedCallback = null)
     {
         IsAttacking = true;
         WeaponCollider.isTrigger = true;
@@ -146,6 +173,8 @@ public class PlayerController : MonoBehaviour
             finishedCallback();
         }
     }
+
+
 
     #endregion
 }
