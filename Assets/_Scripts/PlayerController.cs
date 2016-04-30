@@ -27,12 +27,17 @@ public class PlayerController : MonoBehaviour
     public GameObject Weapon;
     public BoxCollider WeaponCollider;
     public Animator Animator;
-    public CharacterController Character;
+    //public CharacterController Character;
     public kami02 skill02;
+	public Transform groundCheck;			
+
+	private Rigidbody rb;						// Change of the CharacterController for this RigidBody
 
     #endregion
 
     #region Properties
+
+	private bool grounded = false;
 
     public bool IsJumping { get; private set; }
     public bool IsAttacking { get; private set; }
@@ -76,7 +81,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void PerformAbility(string text)
+    public void PerformAbility()
     {
         SceneManager.LoadScene("main");
     }
@@ -87,7 +92,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Character.isGrounded)
+		grounded = Physics.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+
+
+		if (grounded)
         {
             IsJumping = false;
 
@@ -107,6 +115,12 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Local methods
+
+	// Use this for initialization
+	void Awake () 
+	{
+		rb = GetComponent<Rigidbody>();
+	}
 
     protected void UpdateAnimationStatus()
     {
@@ -130,7 +144,7 @@ public class PlayerController : MonoBehaviour
     protected void UpdateMovement()
     {
         m_MovementDirection.y -= GravityInfluence;
-        Character.Move(m_MovementDirection * Time.deltaTime);
+        rb.MovePosition(m_MovementDirection * Time.deltaTime);
     }
 
     [Conditional("UNITY_ANDROID"), Conditional("UNITY_IOS")]
