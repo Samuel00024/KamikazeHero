@@ -94,22 +94,21 @@ public class PlayerController : MonoBehaviour
     {
 		grounded = Physics.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
-
 		if (grounded)
         {
             IsJumping = false;
 
             Animator.SetBool("Jump", false);
 
-            m_MovementDirection = new Vector3(0, 0, MovementSpeed);
-            m_MovementDirection = transform.TransformDirection(m_MovementDirection);
+            //m_MovementDirection = new Vector3(0, 0, MovementSpeed);
+            //m_MovementDirection = transform.TransformDirection(m_MovementDirection);
         }
 
         ProcessInputDesktop();
         ProcessInputMobile();
 
         UpdateAnimationStatus();
-        UpdateMovement();
+        //UpdateMovement();
     }
 
     #endregion
@@ -164,7 +163,8 @@ public class PlayerController : MonoBehaviour
     {
         if (IsJumping == false && Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
-            m_MovementDirection.y = JumpSpeed;
+            rb.AddExplosionForce(JumpSpeed, m_MovementDirection, 5);
+            //m_MovementDirection.y = JumpSpeed;
             IsJumping = true;
 
             Animator.SetBool("Jump", true);
