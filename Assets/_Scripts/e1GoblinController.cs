@@ -4,13 +4,12 @@ using System.Collections;
 public class e1GoblinController : MonoBehaviour {
 
 	public float speed;
-	public float gravity = 20.0f;
+	public float gravity = 20.0F;
 
-	public Vector3 moveDirection = Vector3.zero;
-	
-	// Update is called once per frame
+	private Vector3 moveDirection = Vector3.zero;
+
 	void Update () {
-		moveDirection = new Vector3 (-speed, 0, 0);
+		moveDirection = new Vector3(-speed, 0, 0);
 		moveDirection.y -= gravity * Time.deltaTime;
 		transform.Translate (moveDirection * Time.deltaTime);
 	}

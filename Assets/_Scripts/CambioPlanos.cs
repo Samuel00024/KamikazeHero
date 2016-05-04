@@ -5,9 +5,11 @@ public class CambioPlanos : MonoBehaviour {
 
     public Transform posActual;
     public Transform posFinal;
-    public float velocidad = 2f;
+    public float velocidad = 0.0f;
     public bool finalizador = false; //indica si es el que inicia el evento
     private bool cambio=false;
+
+    private Rigidbody rb;
 
     // Use this for initialization
     void Start()
@@ -20,9 +22,11 @@ public class CambioPlanos : MonoBehaviour {
     {
         if (cambio && !finalizador)
         {
-            //posActual.position = Vector3.Lerp(posActual.position, posFinal.position, velocidad);
+            posActual.position = Vector3.Lerp(posActual.position, posFinal.position, velocidad);
+            //rb.MoveRotation(Quaternion.Slerp(posActual.rotation, posFinal.rotation, velocidad));
             posActual.rotation = Quaternion.Slerp(posActual.rotation, posFinal.rotation, velocidad);
-            if(posActual.rotation == posFinal.rotation)cambio = false;
+            
+            if (posActual.rotation == posFinal.rotation)cambio = false;
         }
 
     }
