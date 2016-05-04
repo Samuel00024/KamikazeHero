@@ -51,7 +51,6 @@ public class KamiController : MonoBehaviour
     public bool IsJumping { get; private set; }
     public bool IsAttacking { get; private set; }
     //public bool IsSkill02 { get; private set; }
-    protected Vector3 v_direction = new Vector3(1, 0, 0);
 
     #endregion
 
@@ -64,8 +63,10 @@ public class KamiController : MonoBehaviour
     // Use this for initialization
     void Start () {
         IsJumping = false;
-        
-	}
+        rb.velocity = new Vector3(MovementSpeed, 0, 0);
+
+
+    }
 
     // Use this for initialization
     void Awake()
@@ -79,41 +80,73 @@ public class KamiController : MonoBehaviour
     {
         //grounded = Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, GroundDist);
         grounded = Physics.Linecast(transform.position, transform.position + Vector3.down * GroundDist);
-        
-       rb.velocity = new Vector3((transform.forward * MovementSpeed).x, (transform.forward * MovementSpeed).y + rb.velocity.y , (transform.forward * MovementSpeed).z);
-
+        //rb.velocity= new Vector3(rb.velocity.x + MovementSpeed, rb.velocity.y, rb.velocity.z);
+        //rb.velocity.Scale(transform.forward);
+        //rb.velocity = new Vector3(transform.forward.x * (MovementSpeed + Mathf.Abs(Mathf.RoundToInt(rb.velocity.x) - MovementSpeed)), (transform.forward * MovementSpeed).y + rb.velocity.y, transform.forward.z * (MovementSpeed + Mathf.Abs(rb.velocity.z - MovementSpeed)));
+        fixVelocity();
+        //UnityEngine.Debug.Log(rb.velocity);
     }
 
     // Update is called once per frame
     void Update () {
         
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0)) //For hard test
         {
             performJump();
-        }
+        }*/
+
+        ProcessInputDesktop();
+        ProcessInputMobile();
 
         //UpdateAnimationStatus();
         //CheckGroundStatus();
     }
 
+    private void fixVelocity()
+    {
+        float _x, _y, _z;
+
+        if (rb.velocity.x - MovementSpeed <= 0)
+        {
+            _x = MovementSpeed * transform.forward.x;
+        }
+        else
+        {
+            _x = transform.forward.x * (MovementSpeed + (Mathf.RoundToInt(rb.velocity.x) - MovementSpeed));
+        }
+
+        _y = rb.velocity.y;
+
+        if (rb.velocity.z - MovementSpeed <= 0)
+        {
+            _z = MovementSpeed * transform.forward.z;
+        }
+        else
+        {
+            _z = transform.forward.z * (MovementSpeed + (Mathf.RoundToInt(rb.velocity.z) - MovementSpeed));
+        }
+
+        rb.velocity = new Vector3(_x,_y,_z);
+    }
 
 
     [Conditional("UNITY_ANDROID"), Conditional("UNITY_IOS")]
     protected void ProcessInputMobile()
     {
-        if (IsJumping == false && Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject() == false)
+        if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject() == false)
         {
-            IsJumping = true;
+            performJump();
+            //IsJumping = true;
         }
     }
 
     [Conditional("UNITY_STANDALONE")]
     protected void ProcessInputDesktop()
     {
-        if (IsJumping == false && Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
+        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
             performJump();
-            IsJumping = true;
+            //IsJumping = true;
         }
     }
 
@@ -131,34 +164,42 @@ public class KamiController : MonoBehaviour
         if (!IsJumping && grounded)
         {
             //grounded = false;
+            UnityEngine.Debug.Log("flag Salto 1");
+            
+            
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(new Vector3(0, (JumpSpeed * 100)));
+            rb.AddForce(new Vector3(0, (JumpSpeed),0),ForceMode.Impulse);
+            
             jump2 = true;
             IsJumping = true;
             
         }
         else if (jump2)
         {
+            UnityEngine.Debug.Log("flag Salto 2");
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(new Vector3(0, (JumpSpeed * 100)));
+            rb.AddForce(new Vector3(0, (JumpSpeed),0), ForceMode.Impulse);
             jump2 = false;
             jump3 = true;
-        }else if (jump3)
+        }
+        else if (jump3)
         {
+            UnityEngine.Debug.Log("flag Salto 3");
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(new Vector3((JumpSpeed * 100),(JumpSpeed * 30)));
-            rb.useGravity = false;
+            rb.AddForce(new Vector3((JumpSpeed/3),(JumpSpeed/3),0), ForceMode.Impulse);
+            //rb.useGravity = false;
             
             jump3 = false;
         }
 
         if (rb.velocity.y < 1)
         {
-            rb.useGravity = true;
+            //rb.useGravity = true;
         }
 
         if (grounded)
         {
+            rb.velocity = new Vector3(0, 0, 0);
             IsJumping = false;
             Animator.SetBool("Jump", false);
             Animator.SetFloat("Speed", MovementSpeed);

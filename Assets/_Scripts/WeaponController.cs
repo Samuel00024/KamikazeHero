@@ -15,6 +15,7 @@ public class WeaponController : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
+        Debug.Log("impacto");
         HP = col.gameObject.GetComponent<Health>();
         if (HP.sub(damage) > 0)
         {
