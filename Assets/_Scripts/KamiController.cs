@@ -106,9 +106,15 @@ public class KamiController : MonoBehaviour
     {
         float _x, _y, _z;
 
-        if (rb.velocity.x - MovementSpeed <= 0)
+        if (rb.velocity.x < MovementSpeed )
         {
-            _x = MovementSpeed * transform.forward.x;
+            if(rb.velocity.x >= 0) {
+                _x = MovementSpeed * transform.forward.x;
+            }
+            else
+            {
+                _x = transform.forward.x * (MovementSpeed + (Mathf.RoundToInt(rb.velocity.x) - MovementSpeed));
+            }
         }
         else
         {
@@ -117,9 +123,16 @@ public class KamiController : MonoBehaviour
 
         _y = rb.velocity.y;
 
-        if (rb.velocity.z - MovementSpeed <= 0)
+        if (rb.velocity.z < MovementSpeed)
         {
-            _z = MovementSpeed * transform.forward.z;
+            if (rb.velocity.z >= 0)
+            {
+                _z = MovementSpeed * transform.forward.z;
+            }
+            else
+            {
+                _z = transform.forward.z * (MovementSpeed + (Mathf.RoundToInt(rb.velocity.z) - MovementSpeed));
+            }
         }
         else
         {
