@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
 	public Text timeText;				//Text to show time played
 	public Text pauseGUI;				//Text to show when paused
+	public Button resetBut;				//Button to show when paused
+	public Button exitBut;				//Button to show when paused
 
 	private bool pauseGame = false;		//Variable to know if the game is paused or not
 	private bool showGUI = false;		//Variable to determine if we show the pause interface or not
@@ -13,6 +16,8 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		timeText.text = "Time: 00:00";
 		pauseGUI.text = "";
+		resetBut.gameObject.SetActive (false);
+		exitBut.gameObject.SetActive (false);
 	}
 		
 	void Update() {
@@ -21,6 +26,7 @@ public class GameController : MonoBehaviour {
 
 	}
 
+	//Pauses the game
 	public void DoPause()
 	{
 		//=== Pause ===============================
@@ -37,9 +43,35 @@ public class GameController : MonoBehaviour {
 
 		if (showGUI) {
 			pauseGUI.text = "Pause";
+			resetBut.gameObject.SetActive (true);
+			exitBut.gameObject.SetActive (true);
 		} else {
 			pauseGUI.text = "";
+			resetBut.gameObject.SetActive (false);
+			exitBut.gameObject.SetActive (false);
 		}
 	}
 
+	//Reset the nivelPrueba level 
+	//TO DO: Make it reset tha ACTUAL level
+	public void DoReset()
+	{
+		string aux; 
+
+		//Exit Pause before the reset
+		Time.timeScale = 1;
+		showGUI = false;
+		aux = SceneManager.GetActiveScene ().name;
+		//Debug.Log (aux);
+		SceneManager.LoadScene(aux);
+	}
+
+	//Exist to the main menu
+	public void DoExit()
+	{
+		//Exit Pause before leaving
+		Time.timeScale = 1;
+		showGUI = false;
+		SceneManager.LoadScene("main");
+	}
 }
