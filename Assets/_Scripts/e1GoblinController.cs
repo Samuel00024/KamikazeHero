@@ -4,7 +4,6 @@ using System.Collections;
 public class e1GoblinController : MonoBehaviour {
 
 	private float speed = 5;
-	private int damage = 1;
 
 	[Header("Parameters")]
 	public float gravity = 10.0F;
