@@ -145,6 +145,7 @@ public class KamiController : MonoBehaviour
         }
 
         rb.velocity = new Vector3(_x,_y,_z);
+        //rb.velocity = new Vector3((rb.velocity.x*transform.forward.x)*MovementSpeed, _y, (rb.velocity.z*transform.forward.z)*MovementSpeed);
     }
 
 
