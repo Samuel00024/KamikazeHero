@@ -6,7 +6,7 @@ public class WeaponController : MonoBehaviour {
     private int damage;
     private Health HP;
 
-    public GameObject chispas;
+    //public GameObject chispas;
 
     // Use this for initialization
     void Start () {
@@ -19,8 +19,8 @@ public class WeaponController : MonoBehaviour {
         HP = col.gameObject.GetComponent<Health>();
         if (HP.sub(damage) > 0)
         {
-            Destroy(col.gameObject);
-            Instantiate(chispas, transform.position, transform.rotation);
+            //Destroy(col.gameObject);
+            //Instantiate(chispas, transform.position, transform.rotation);
         }
 
     }

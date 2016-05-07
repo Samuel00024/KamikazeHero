@@ -6,7 +6,7 @@ using System.Collections;
 
 public class puntoParada : MonoBehaviour {
 
-    private PlayerController pc;
+    private KamiController pc;
 
     public GameObject miScript;
 
@@ -16,7 +16,7 @@ public class puntoParada : MonoBehaviour {
 
     void Start () {
 
-        pc = miScript.GetComponent<PlayerController>();
+        pc = miScript.GetComponent<KamiController>();
 
     }
 
