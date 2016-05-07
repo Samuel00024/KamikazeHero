@@ -13,17 +13,22 @@ public class WeaponController : MonoBehaviour {
 	
 	}
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
-        Debug.Log("impacto");
-        HP = col.gameObject.GetComponent<Health>();
-        if (HP.sub(damage) > 0)
-        {
-            Destroy(col.gameObject);
-            Instantiate(chispas, transform.position, transform.rotation);
-        }
+        if (col.gameObject.tag == "Enemy")
+            {
+        
+            Debug.Log("impacto");
+            HP = col.gameObject.GetComponent<Health>();
+            if (HP.sub(damage) > 0)
+            {
+                Destroy(col.gameObject);
+                Instantiate(chispas, transform.position, transform.rotation);
+            }
 
+        }
     }
+
 
     public void setDamage(int d)
     {
