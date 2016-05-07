@@ -370,7 +370,7 @@ public class KamiController : MonoBehaviour
             IsSkill02 = true;
             UnityEngine.Debug.Log("haciendo skill2-3");
             rb.velocity = new Vector3(0, rb.velocity.y, rb.velocity.z);
-            rb.AddForce(new Vector3((-MovementSpeed - 10), 0, 0), ForceMode.Impulse);
+            rb.AddForce(new Vector3(0, JumpSpeed, 0), ForceMode.Impulse);
             s2_3 = false;
             WeaponCollider.enabled = true;
             Weapon.GetComponent<WeaponController>().setDamage(10);
