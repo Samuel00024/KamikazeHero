@@ -79,12 +79,7 @@ public class PlayerController : MonoBehaviour
             );
         }
     }
-
-
-    public void PerformAbility()
-    {
-        SceneManager.LoadScene("main");
-    }
+		
 
     #endregion
 
