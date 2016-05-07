@@ -3,19 +3,18 @@ using System.Collections;
 
 public class WeaponController : MonoBehaviour {
 
-    private int damage;
+	private int damage;
     private Health HP;
 
     public GameObject chispas;
 
     // Use this for initialization
     void Start () {
-	
 	}
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Enemy")
+		if (col.gameObject.tag == "Enemy")
             {
         
             Debug.Log("impacto");
