@@ -14,9 +14,9 @@ public class WeaponController : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
+        Debug.Log("enemigo tocado "+ col.gameObject.tag);
 		if (col.gameObject.tag == "Enemy")
             {
-        
             Debug.Log("impacto");
             HP = col.gameObject.GetComponent<Health>();
             if (HP.sub(damage) > 0)

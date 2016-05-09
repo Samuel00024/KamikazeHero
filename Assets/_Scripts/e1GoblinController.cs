@@ -3,7 +3,7 @@ using System.Collections;
 
 public class e1GoblinController : MonoBehaviour {
 
-	private float speed = 5;
+	public float speed = 5;
 
 	[Header("Parameters")]
 	public float gravity = 10.0F;
@@ -11,12 +11,12 @@ public class e1GoblinController : MonoBehaviour {
 	[Header("References")]
 	public Transform Player;
 
-	private GameController gameController;
+    private GameController gameController;
 	private Vector3 moveDirection = Vector3.zero;
 
 
 	void Start () {
-
+        
 	}
 
 
