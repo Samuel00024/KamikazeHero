@@ -25,6 +25,6 @@ public class CamController : MonoBehaviour {
     }
     public void startLevel()
     {
-		SceneManager.LoadScene ("nivelPrueba");
+		SceneManager.LoadScene ("1-1");
     }
 }
