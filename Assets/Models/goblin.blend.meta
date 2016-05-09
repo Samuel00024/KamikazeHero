@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: 6be94f12f5a6d6e40939bce003d33ead
+timeCreated: 1462648300
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Antebrazo_der_001
+    100002: Antebrazo_izq
+    100004: Armature
+    100006: Brazo__izq
+    100008: Brazo_der
+    100010: Cabeza
+    100012: Cadera_der
+    100014: Cadera_izq
+    100016: Circle
+    100018: ColisionadorCadera
+    100020: Columna
+    100022: Cuello
+    100024: //RootNode
+    100026: Hombro_der
+    100028: Hombro_izq
+    100030: Mano_der_001
+    100032: Mano_izq
+    100034: Pie_der
+    100036: Pie_izq
+    100038: Pierna_abajo_der
+    100040: Pierna_abajo_izq
+    100042: Pierna_der
+    100044: Pierna_izq
+    100046: Plane
+    100048: Plane_MeshPart0
+    100050: Plane_MeshPart1
+    100052: Plane_MeshPart2
+    100054: Plane_MeshPart3
+    100056: Plane_MeshPart4
+    100058: Plane_MeshPart5
+    100060: Plane_MeshPart6
+    100062: Plane_MeshPart7
+    100064: Principal
+    100066: Torus_001
+    400000: Antebrazo_der_001
+    400002: Antebrazo_izq
+    400004: Armature
+    400006: Brazo__izq
+    400008: Brazo_der
+    400010: Cabeza
+    400012: Cadera_der
+    400014: Cadera_izq
+    400016: Circle
+    400018: ColisionadorCadera
+    400020: Columna
+    400022: Cuello
+    400024: //RootNode
+    400026: Hombro_der
+    400028: Hombro_izq
+    400030: Mano_der_001
+    400032: Mano_izq
+    400034: Pie_der
+    400036: Pie_izq
+    400038: Pierna_abajo_der
+    400040: Pierna_abajo_izq
+    400042: Pierna_der
+    400044: Pierna_izq
+    400046: Plane
+    400048: Plane_MeshPart0
+    400050: Plane_MeshPart1
+    400052: Plane_MeshPart2
+    400054: Plane_MeshPart3
+    400056: Plane_MeshPart4
+    400058: Plane_MeshPart5
+    400060: Plane_MeshPart6
+    400062: Plane_MeshPart7
+    400064: Principal
+    400066: Torus_001
+    2300000: ColisionadorCadera
+    2300002: Torus_001
+    3300000: ColisionadorCadera
+    3300002: Torus_001
+    4300000: Plane_MeshPart0
+    4300002: Plane_MeshPart1
+    4300004: Plane_MeshPart2
+    4300006: Plane_MeshPart3
+    4300008: Plane_MeshPart4
+    4300010: Plane_MeshPart5
+    4300012: Plane_MeshPart6
+    4300014: Plane_MeshPart7
+    4300016: ColisionadorCadera
+    4300018: Torus_001
+    4300020: Circle
+    7400000: Default Take
+    9500000: //RootNode
+    13700000: Circle
+    13700002: Plane_MeshPart0
+    13700004: Plane_MeshPart1
+    13700006: Plane_MeshPart2
+    13700008: Plane_MeshPart3
+    13700010: Plane_MeshPart4
+    13700012: Plane_MeshPart5
+    13700014: Plane_MeshPart6
+    13700016: Plane_MeshPart7
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
